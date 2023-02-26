@@ -96,4 +96,29 @@ To collect data from multiple children, or to have two child components communic
 
 Lifting state into a parent component is common when React components are refactored.
 
-Let’s take this opportunity to try it out. Edit the Board component so that it declares a state variable named squares that defaults to an array of 9 nulls corresponding to the 9 squares
+Let’s take this opportunity to try it out. Edit the Board component so that it declares a state
+variable named squares that defaults to an array of 9 nulls corresponding to the 9 squares
+
+
+Next, you need to change what happens when a Square is clicked. The Board component now maintains which 
+squares are filled. You’ll need to create a way for the Square to update
+the Board’s state. Since state
+is private to a component that defines it, you cannot update the
+Board’s state directly from Square.
+
+
+Instead, you’ll pass down a function from the Board component to the 
+Square component, and 
+you’ll have Square call that function when a square is clicked. You’ll start
+with the function that the Square component will call when it is clicked. You’ll 
+call that function onSquareClick:
+
+
+The handleClick function creates a copy of the squares array (nextSquares) with the
+JavaScript slice() Array method. Then, handleClick updates the nextSquares array 
+to add X to the first ([0] index) square.
+
+Calling the setSquares function lets React know the state of the component
+has changed. This will trigger a re-render of the components that use the
+squares state (Board) as well as its child components (the
+Square components that make up the board).
