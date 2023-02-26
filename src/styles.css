@@ -71,9 +71,49 @@ body {
   width: 34px;
 }
 
+/*
+This is a CSS code snippet that is used to clear floated elements
+within a container.
+
+When elements are floated, they are taken out of the normal flow 
+of the document and positioned to the left or right of their parent 
+container. This can cause issues with the layout of other elements
+within the same container.
+
+To clear the floated elements and allow the container to wrap
+around them properly, the "clear" property is used. In this case,
+ "clear: both" is used to clear both left and right floats.
+
+The "content" property is set to an empty string, and "display" is 
+set to "table" to make the container behave like a table and fill
+the available horizontal space. This ensures that the cleared element
+is pushed down to the next line and does not overlap with any of the
+floated elements.
+
+The ".board-row" class is likely used as a container for a group 
+of floated elements, and this code is applied to ensure that they
+are laid out correctly within that container.
+
+.board-row:after refers to a pseudo-element in CSS that is used to target'
+the end of the .board-row container element. The :after pseudo-element 
+inserts content after the specified element, in this case, the .board-row
+ element.
+
+The CSS code clear: both is then applied to this pseudo-element,
+ which clears any floats that may have been applied to the elements 
+within the .board-row container element. This ensures that the
+content after the .board-row element is positioned below any
+floated elements within the container.
+
+Overall, the :after pseudo-element is being used in combination with
+ the clear property to ensure proper positioning and layout of 
+ floated elements within the .board-row container.
+
+*/
+
 .board-row:after {
   clear: both;
-  content: '';
+  content: "";
   display: table;
 }
 
