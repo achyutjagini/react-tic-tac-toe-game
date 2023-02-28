@@ -122,3 +122,10 @@ Calling the setSquares function lets React know the state of the component
 has changed. This will trigger a re-render of the components that use the
 squares state (Board) as well as its child components (the
 Square components that make up the board).
+
+
+The handleClick(0) call will be a part of rendering the board component. Because
+handleClick(0) alters the state of the board component by calling setSquares,
+your entire board component will be re-rendered again. But handleClick(0) is
+now a part of rendering of the board component, and so you’ve created an 
+infinite loop:
