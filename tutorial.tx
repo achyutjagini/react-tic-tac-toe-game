@@ -282,3 +282,39 @@ React elements like <button> are regular JavaScript objects;
 you can pass them around in your application. To render multiple
 items in React, you can use an array of React elements.
 
+You already have an array of history moves in state,
+ so now you need to transform it to an array of React
+ elements. In JavaScript, to transform one array into
+ another, you can use the array map method:
+
+The map() function is a higher-order function in 
+JavaScript that is used to transform an array by 
+applying a function to each element of the array. 
+It takes a single argument, which is a callback 
+function that defines the transformation to be 
+applied to each element of the array. This callback function can take up to three arguments:
+
+The first argument represents the value of the current 
+element being processed.
+The second argument represents the index of the current
+element being processed.
+The third argument represents the entire array that
+the map() function was called upon.
+
+In addition to the updated counts, a human reading 
+this would probably say that you swapped Alexa and
+Ben’s ordering and inserted Claudia between Alexa and 
+Ben. However, React is a computer program and can’t know what 
+you intended, so you need to specify a key property for each
+list item to differentiate each list item from its siblings.
+If you were displaying data from a database, Alexa, Ben, and Claudia’s 
+database IDs could be used as keys.
+
+<li key={user.id}>
+  {user.name}: {user.taskCount} tasks left
+</li>
+
+When a list is re-rendered, React takes each list item’s key and searches the previous list’s items for a matching key. If the current list
+ has a key that didn’t exist before, React creates a component. If the current 
+ list is missing a key that existed in the previous list, React destroys 
+ the previous component. If two keys match, the corresponding component is moved.
