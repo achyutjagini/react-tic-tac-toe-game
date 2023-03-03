@@ -128,4 +128,91 @@ The handleClick(0) call will be a part of rendering the board component. Because
 handleClick(0) alters the state of the board component by calling setSquares,
 your entire board component will be re-rendered again. But handleClick(0) is
 now a part of rendering of the board component, and so you’ve created an 
-infinite loop:
+infinite loop
+
+If you mutated the squares array, implementing time travel would 
+be very difficult.
+
+However, you used slice() to create a new copy of the squares
+array after every move, and treated it as immutable. This will 
+allow you to store every past version of the squares array, and 
+navigate between the turns that have already happened.
+
+You’ll store the past squares arrays in another array called 
+history, which you’ll store as a new state variable. The history
+array represents all board states, from the first to the last
+move, and has a shape like this.
+
+[
+  // Before first move
+  [null, null, null, null, null, null, null, null, null],
+  // After first move
+  [null, null, null, null, 'X', null, null, null, null],
+  // After second move
+  [null, null, null, null, 'X', null, null, null, 'O'],
+  // ...
+]
+
+You will now write a new top-level component called Game to 
+display a list of past moves. That’s where you will place the
+history state that contains the entire game history.
+
+Placing the history state into the Game component will let you
+remove the squares state from its child Board component. 
+Just like you “lifted state up” from the Square component 
+into the Board component, you will now lift it up from
+the Board into the top-level Game component. This gives
+the Game component full control over the Board’s data
+and lets it instruct the Board to render 
+previous turns from the history.
+
+add a Game component with export default. Have it render
+the Board component inside some markup.
+
+export default function Game() {
+  return (
+    <div className="game">
+
+      <div className="game-board">
+        <Board />
+      </div>
+
+      <div className="game-info">
+        <ol>{/*TODO*/}</ol>
+      </div>
+
+    </div>
+  );
+}
+
+Note that you are removing the export default keywords before
+the function Board() { declaration and adding them before
+the function Game() { declaration. This tells your index.js
+file to use the Game component as the top-level component
+instead of your Board component. The additional divs returned 
+by the Game component are making room for the game information 
+you’ll add to the board later.
+
+
+Add some state to the Game component to track which player is
+next and the history of moves:
+
+export default function Game() {
+  const [xIsNext, setXIsNext] = useState(true);
+  const [history, setHistory] = useState([Array(9).fill(null)]);
+  // ...
+
+Notice how [Array(9).fill(null)] is an array with a single item, 
+which itself is an array of 9 nulls.
+
+To render the squares for the current move, you’ll want to
+read the last squares array from the history. You don’t 
+need useState for this—you already have enough information
+to calculate it during rendering:
+
+export default function Game() {
+  const [xIsNext, setXIsNext] = useState(true);
+  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const currentSquares = history[history.length - 1];
+  // ...
+
