@@ -216,3 +216,25 @@ export default function Game() {
   const currentSquares = history[history.length - 1];
   // ...
 
+Next, create a handlePlay function inside the Game component 
+that will be called by the Board component to update the game.
+Pass xIsNext, currentSquares and handlePlay as props 
+to the Board component:
+
+export default function Game() {
+  const [xIsNext, setXIsNext] = useState(true);
+  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const currentSquares = history[history.length - 1];
+
+  function handlePlay(nextSquares) {
+    // TODO
+  }
+
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board xIsNext={xIsNext} squares={currentSquares} 
+        onPlay={handlePlay} />
+        //...
+  )
+}
